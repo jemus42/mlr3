@@ -107,15 +107,17 @@ Prediction = R6Class("Prediction",
       invisible(self)
     },
 
-    obs_loss = function(measure = NULL) {
+    obs_loss = function(measure = NULL, prefix = "loss_") {
       measure = as_measure(measure, task_type = self$task_type)
+      assert_string(prefix)
+
       obs_loss = measure$obs_loss
       if (is.null(obs_loss)) {
         stopf("Measure '%s' does not support the calculation of losses per observation", measure$id)
       }
 
       tab = as.data.table(self)
-      rcbind(tab, setnames(data.table(do.call(obs_loss, tab)), measure$id))
+      rcbind(tab, setnames(data.table(do.call(obs_loss, tab)), paste0(prefix, measure$id)))
     }
   ),
 
