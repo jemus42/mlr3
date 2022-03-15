@@ -30,6 +30,7 @@
 #' @template param_measure_properties
 #' @template param_predict_sets
 #' @template param_task_properties
+#' @template param_obs_loss
 #' @template param_packages
 #' @template param_label
 #' @template param_man
@@ -84,6 +85,11 @@ Measure = R6Class("Measure",
     #' If `TRUE`, good predictions correspond to small values of performance scores.
     minimize = NULL,
 
+    #' @field obs_loss (`function(truth, ...)` | `NULL`)\cr
+    #' Optional function to calculate the loss per observation.
+    #' Passed arguments are truth as well as all required predict types.
+    obs_loss = NULL,
+
     #' @template field_packages
     packages = NULL,
 
@@ -96,7 +102,7 @@ Measure = R6Class("Measure",
     #' Note that this object is typically constructed via a derived classes, e.g. [MeasureClassif] or [MeasureRegr].
     initialize = function(id, task_type = NA, param_set = ps(), range = c(-Inf, Inf), minimize = NA, average = "macro",
       aggregator = NULL, properties = character(), predict_type = "response",
-      predict_sets = "test", task_properties = character(), packages = character(),
+      predict_sets = "test", task_properties = character(), obs_loss = NULL, packages = character(),
       label = NA_character_, man = NA_character_) {
 
       self$id = assert_string(id, min.chars = 1L)
@@ -120,6 +126,7 @@ Measure = R6Class("Measure",
       self$predict_type = predict_type
       self$predict_sets = assert_subset(predict_sets, mlr_reflections$predict_sets, empty.ok = FALSE)
       self$task_properties = task_properties
+      self$obs_loss = assert_function(obs_loss, args = "truth", null.ok = TRUE)
       self$packages = union("mlr3", assert_character(packages, any.missing = FALSE, min.chars = 1L))
       self$man = assert_string(man, na.ok = TRUE)
 

@@ -78,6 +78,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   predict_type = "response",
   predict_sets = "test",
   task_properties = character(),
+  obs_loss = NULL,
   packages = character(),
   label = NA_character_,
   man = NA_character_
@@ -149,6 +150,9 @@ Default is \code{"test"}.}
 
 \item{\code{task_properties}}{(\code{character()})\cr
 Required task properties, see \link{Task}.}
+
+\item{\code{obs_loss}}{(\verb{function(truth, ...)} | NULL)\cr
+Function to calculate the loss per observation, or, if this is not feasible, \code{NULL}.}
 
 \item{\code{packages}}{(\code{character()})\cr
 Set of required packages.

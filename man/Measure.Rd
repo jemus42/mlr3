@@ -102,6 +102,10 @@ Properties of this measure.}
 \item{\code{minimize}}{(\code{logical(1)})\cr
 If \code{TRUE}, good predictions correspond to small values of performance scores.}
 
+\item{\code{obs_loss}}{(\verb{function(truth, ...)} | \code{NULL})\cr
+Optional function to calculate the loss per observation.
+Passed arguments are truth as well as all required predict types.}
+
 \item{\code{packages}}{(\code{character(1)})\cr
 Set of required packages.
 These packages are loaded, but not attached.}
@@ -168,6 +172,7 @@ Note that this object is typically constructed via a derived classes, e.g. \link
   predict_type = "response",
   predict_sets = "test",
   task_properties = character(),
+  obs_loss = NULL,
   packages = character(),
   label = NA_character_,
   man = NA_character_
@@ -243,6 +248,9 @@ Default is \code{"test"}.}
 
 \item{\code{task_properties}}{(\code{character()})\cr
 Required task properties, see \link{Task}.}
+
+\item{\code{obs_loss}}{(\verb{function(truth, ...)} | NULL)\cr
+Function to calculate the loss per observation, or, if this is not feasible, \code{NULL}.}
 
 \item{\code{packages}}{(\code{character()})\cr
 Set of required packages.

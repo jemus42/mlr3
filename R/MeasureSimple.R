@@ -14,17 +14,24 @@ MeasureBinarySimple = R6Class("MeasureBinarySimple",
       }
 
       info = mlr3measures::measures[[name]]
+      obs_loss = info[["obs_loss"]]
+      if (!is.null(obs_loss)) {
+        obs_loss = get(obs_loss, envir = asNamespace("mlr3measures"), mode = "function")
+      }
+
       super$initialize(
         id = paste0("classif.", name),
         param_set = param_set$clone(),
-        range = c(info$lower, info$upper),
-        minimize = info$minimize,
-        predict_type = info$predict_type,
+        range = c(info[["lower"]], info[["upper"]]),
+        minimize = info[["minimize"]],
+        predict_type = info[["predict_type"]],
         task_properties = "twoclass",
+        obs_loss = obs_loss,
         packages = "mlr3measures",
-        label = info$title,
+        label = info[["title"]],
         man = paste0("mlr3::mlr_measures_classif.", name)
       )
+
       self$fun = get(name, envir = asNamespace("mlr3measures"), mode = "function")
     }
   ),
@@ -51,15 +58,22 @@ MeasureClassifSimple = R6Class("MeasureClassifSimple",
     na_value = NaN,
     initialize = function(name) {
       info = mlr3measures::measures[[name]]
+      obs_loss = info[["obs_loss"]]
+      if (!is.null(obs_loss)) {
+        obs_loss = get(obs_loss, envir = asNamespace("mlr3measures"), mode = "function")
+      }
+
       super$initialize(
         id = paste0("classif.", name),
-        range = c(info$lower, info$upper),
-        minimize = info$minimize,
-        predict_type = info$predict_type,
+        range = c(info[["lower"]], info[["upper"]]),
+        minimize = info[["minimize"]],
+        predict_type = info[["predict_type"]],
+        obs_loss = obs_loss,
         packages = "mlr3measures",
-        label = info$title,
+        label = info[["title"]],
         man = paste0("mlr3::mlr_measures_classif.", name)
       )
+
       self$fun = get(name, envir = asNamespace("mlr3measures"), mode = "function")
     }
   ),
@@ -81,15 +95,22 @@ MeasureRegrSimple = R6Class("MeasureRegrSimple",
     na_value = NaN,
     initialize = function(name) {
       info = mlr3measures::measures[[name]]
+      obs_loss = info[["obs_loss"]]
+      if (!is.null(obs_loss)) {
+        obs_loss = get(obs_loss, envir = asNamespace("mlr3measures"), mode = "function")
+      }
+
       super$initialize(
         id = paste0("regr.", name),
-        range = c(info$lower, info$upper),
-        minimize = info$minimize,
-        predict_type = info$predict_type,
+        range = c(info[["lower"]], info[["upper"]]),
+        minimize = info[["minimize"]],
+        predict_type = info[["predict_type"]],
+        obs_loss = obs_loss,
         packages = "mlr3measures",
-        label = info$title,
+        label = info[["title"]],
         man = paste0("mlr3::mlr_measures_regr.", name)
       )
+
       self$fun = get(name, envir = asNamespace("mlr3measures"), mode = "function")
     }
   ),
@@ -120,13 +141,13 @@ MeasureSimilaritySimple = R6Class("MeasureSimilaritySimple",
 
       super$initialize(
         id = paste0("sim.", name),
-        range = c(info$lower, info$upper),
-        minimize = info$minimize,
+        range = c(info[["lower"]], info[["upper"]]),
+        minimize = info[["minimize"]],
         average = "custom",
         aggregator = agg,
         predict_type = "response",
         packages = "mlr3measures",
-        label = info$title,
+        label = info[["title"]],
         man = paste0("mlr3::mlr_measures_sim.", name),
       )
     }

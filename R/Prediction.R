@@ -105,6 +105,17 @@ Prediction = R6Class("Prediction",
       row_ids = assert_row_ids(row_ids)
       self$data = filter_prediction_data(self$data, row_ids)
       invisible(self)
+    },
+
+    obs_loss = function(measure = NULL) {
+      measure = as_measure(measure, task_type = self$task_type)
+      obs_loss = measure$obs_loss
+      if (is.null(obs_loss)) {
+        stopf("Measure '%s' does not support the calculation of losses per observation", measure$id)
+      }
+
+      tab = as.data.table(self)
+      rcbind(tab, setnames(data.table(do.call(obs_loss, tab)), measure$id))
     }
   ),
 
