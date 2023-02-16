@@ -21,9 +21,9 @@ learner_train = function(learner, task, train_row_ids = NULL, test_row_ids = NUL
     model
   }
 
-  assert_choice(mode, c("train", "hotstart"))
-  assert_task(task)
-  assert_learner(learner)
+  #assert_choice(mode, c("train", "hotstart"))
+  #assert_task(task)
+  #assert_learner(learner)
 
   # ensure that required packages are installed
   require_namespaces(learner$packages)
@@ -124,8 +124,8 @@ learner_predict = function(learner, task, row_ids = NULL) {
     as_prediction_data(result, task = task, check = TRUE, train_task = learner$state$train_task)
   }
 
-  assert_task(task)
-  assert_learner(learner)
+  #assert_task(task)
+  #assert_learner(learner)
 
   # ensure that required packages are installed
   require_namespaces(learner$packages)
